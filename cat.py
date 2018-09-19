@@ -7,13 +7,6 @@ class Cat:
 		self.y = y;
 		self.h = h;
 
-	def getPos():
-		return self.x, self.y;
-
-	def setPos(x, y):
-		self.x = x;
-		self.y = y;
-
 	def forward():
 		self.x++;
 
@@ -40,3 +33,22 @@ class Cat:
 	def gainCoin(coin):
 		#coin
 		self.coin += coin;
+		
+	def getPos():
+		return self.x, self.y;
+
+	def setPos(x, y):
+		self.x = x;
+		self.y = y;
+
+	def getHP():
+		return self.hp;
+
+	def isAlive():
+		return self.life > 0;
+
+	def getCoin():
+		return self.coin;
+
+	def setJumpHeight():
+		return 
