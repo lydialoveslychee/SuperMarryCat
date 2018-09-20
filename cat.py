@@ -15,7 +15,6 @@ class Cat:
 		self.screen = screen;
 		self.isJumping = False
 		self.jumpingTime = 0
-		print(self.imgX, self.imgY)
 
 
 	def forward(self):
