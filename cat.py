@@ -1,54 +1,80 @@
+import pygame
+from pygame.locals import *
 class Cat:
-	def __init__(life, hp, x, y, h):
-		self.coin = 0;
-		self.life = life;
-		self.hp = hp;
-		self.x = x;
-		self.y = y;
-		self.h = h;
+	def __init__(self, life, hp, path, screenWidth, screenHeight, screen, h):
+		self.coin = 0
+		self.life = life
+		self.hp = hp
+		self.h = h
+		self.img = pygame.image.load(path).convert()
+		self.imgX, self.imgY = self.img.get_size()
+		self.screenWidth = screenWidth
+		self.screenHeight = screenHeight
+		self.x = 0
+		self.y = screenHeight - self.imgY
+		self.screen = screen;
+		self.isJumping = False
+		self.jumpingTime = 0
+		print(self.imgX, self.imgY)
 
-	def forward():
-		self.x++;
 
-	def backward():
+	def forward(self):
+		if self.x < self.screenWidth - self.imgX:
+			self.x += 1
+
+	def backward(self):
 		#cat move backward
 		if self.x > 0:
-			self.x--;
+			self.x -= 1
 
-	def jump(t, y):
+	def jump(self):
 		#jump
-		self.y += 20 * t - 200;
-		if self.y >= y:
-			return True
-		else return False;
+		if self.isJumping:
+			self.y -= -((self.h + self.screenHeight - self.imgY) / 50000) * self.jumpingTime + self.h / 50
+			self.jumpingTime += 1
+			if self.y >= self.screenHeight - self.imgY:
+				self.y = self.screenHeight - self.imgY
+				self.isJumping = False
+				self.jumpingTime = 0
+				return False #jumping stopped
+			else:
+				return True #still jumping
+		else:
+			self.isJumping = True
+			self.jumpingTime += 1
+			return self.jump()
 
-	def hurt():
+
+	def hurt(self):
 		#hurt
-		self.hp--;
+		self.hp -= 1
 
-	def die():
+	def die(self):
 		#die
-		return --self.life;
+		return --self.life
 
-	def gainCoin(coin):
+	def gainCoin(self, coin):
 		#coin
-		self.coin += coin;
+		self.coin += coin
 		
-	def getPos():
-		return self.x, self.y;
+	def getPos(self):
+		return self.x, self.y
 
-	def setPos(x, y):
-		self.x = x;
-		self.y = y;
+	def setPos(self, x, y):
+		self.x = x
+		self.y = y
 
-	def getHP():
-		return self.hp;
+	def getHP(self):
+		return self.hp
 
-	def isAlive():
-		return self.life > 0;
+	def isAlive(self):
+		return self.life > 0
 
-	def getCoin():
-		return self.coin;
+	def getCoin(self):
+		return self.coin
 
-	def setJumpHeight():
-		return 
+	def setJumpHeight(self, h):
+		self.h = h
+
+	def showCat(self):
+		self.screen.blit(self.img, (self.x,self.y))
