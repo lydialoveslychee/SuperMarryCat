@@ -15,21 +15,22 @@ class Cat:
 		self.screen = screen;
 		self.isJumping = False
 		self.jumpingTime = 0
+		self.speed = 0.1
 
 
 	def forward(self):
 		if self.x < self.screenWidth - self.imgX:
-			self.x += 1
+			self.x += self.speed
 
 	def backward(self):
 		#cat move backward
 		if self.x > 0:
-			self.x -= 1
+			self.x -= self.speed
 
 	def jump(self):
 		#jump
 		if self.isJumping:
-			self.y -= -((self.h + self.screenHeight - self.imgY) / 50000) * self.jumpingTime + self.h / 50
+			self.y += 0.001 * self.jumpingTime - 0.01
 			self.jumpingTime += 1
 			if self.y >= self.screenHeight - self.imgY:
 				self.y = self.screenHeight - self.imgY
